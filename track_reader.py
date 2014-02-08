@@ -4,13 +4,16 @@ import gpxpy.gpx
 
 import matplotlib
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+from mpl_toolkits.basemap import Basemap
 
 cwd = os.getcwd()
 data_dir = os.path.join(cwd, 'data')
 
-fig = plt.figure()
-ax = fig.gca(projection='3d')
+m = Basemap(projection='merc', lat_0=51.475, lon_0=-3.17, resolution='f', llcrnrlon=-3.275, llcrnrlat=51.43, urcrnrlon=-3.125, urcrnrlat=51.51)
+m.drawcoastlines()
+m.drawcountries()
+m.fillcontinents(color='gray')
+m.drawmapboundary()
 
 kmlfile = open('progress.kml', 'w')
 kmlfile.write('<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">\n<Document>')
@@ -31,7 +34,9 @@ for f in os.listdir(data_dir):
             z = [p.point.elevation for p in points if p.point.latitude < 51.7 and p.point.latitude > 51.4 and p.point.longitude < -3 and p.point.longitude > -3.4]
             for p in points:
                 kmlfile.write('%.8f,%.8f\n' % (p.point.longitude, p.point.latitude))
-            ax.plot(x,y,z)
+            x,y = m(x, y)
+            m.plot(x,y)
+
             kmlfile.write('</coordinates>\n</LineString>\n</Placemark>')
 
 kmlfile.write('</Document></kml>')
