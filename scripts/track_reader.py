@@ -10,13 +10,15 @@ data_dir = os.path.join(cwd, 'data')
 
 kmlfile = open('progress.kml', 'w')
 kmlfile.write('<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">\n<Document>')
-kmlfile.write('<Style id="purpleLine">\n<LineStyle>\n<color>50781E78</color>\n<width>2</width>\n</LineStyle>\n<PolyStyle>\n<color>7f00ff00</color>\n</PolyStyle>\n</Style>')
+kmlfile.write('<Style id="purpleLine">\n<LineStyle>\n<color>50781E78</color>\n<width>5</width>\n</LineStyle>\n<PolyStyle>\n<color>7f00ff00</color>\n</PolyStyle>\n</Style>')
 for f in os.listdir(data_dir):
     if f.endswith('.gpx'):
 
         gpx_f = os.path.join(data_dir, f)
         
         with open(gpx_f) as gpx_file:
+
+            print gpx_f
             
             gpx_data = gpxpy.parse(gpx_file)
             #if not gpx_data.tracks[0].name.find('Running') == -1:
