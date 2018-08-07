@@ -1,3 +1,4 @@
 scripts/data/*
 *.kml
 _credentials.js
+_credentials.py
